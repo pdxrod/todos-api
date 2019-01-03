@@ -1,0 +1,13 @@
+node_modules
+assets/node_modules
+*.log
+log/*
+tmp/*
+.idea
+*~
+*\~
+*.raw
+*.dta
+*.~lock*
+.*.swp
+.DS_Store
