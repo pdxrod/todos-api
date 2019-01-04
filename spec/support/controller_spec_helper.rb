@@ -6,6 +6,7 @@ module ControllerSpecHelper
 
   # generate expired tokens from user id
   def expired_token_generator(user_id)
+    time = Time.now.to_i - 10
     JsonWebToken.encode({ user_id: user_id }, time)
   end
 
