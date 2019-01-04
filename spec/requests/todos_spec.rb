@@ -74,7 +74,7 @@ RSpec.describe 'Todos API', type: :request do
     end
 
     context 'when the request is invalid' do
-      let(:invalid_attributes) { { title: nil }.to_json }
+      let(:invalid_attributes) { { title: nil, created_by: user.id.to_s }.to_json }
       before { post '/todos', params: invalid_attributes, headers: headers }
 
       it 'returns status code 422' do
@@ -83,7 +83,7 @@ RSpec.describe 'Todos API', type: :request do
 
       it 'returns a validation failure message' do
         expect(response.body)
-          .to match(/Validation failed: Created by can't be blank/)
+          .to match(/Validation failed: Title can't be blank/)
       end
     end
   end
