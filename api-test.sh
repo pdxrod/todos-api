@@ -10,3 +10,9 @@ http PUT :3000/todos/1 title=Beethoven
 http DELETE :3000/todos/1
 http :3000/todos
 
+http :3000/signup name=ash4 email=ash4@email.com password=foobar password_confirmation=foobar
+http :3000/auth/login email=ash4@email.com password=foobar
+
+http :3000/todos Accept:'application/vnd.todos.v1+json'    Authorization:<THE auth_token RETURNED FROM THE PREVIOUS COMMAND>
+
+
