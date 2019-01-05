@@ -11,13 +11,14 @@ class AuthorizeApiRequest
     }
   end
 
-  private
+ private
 
   attr_reader :headers
 
   def user
     token = Token.find_by_token(http_auth_header)
     time = Time.now - 1.hour
+    
     if token.created_at < time
       raise(
         ExceptionHandler::InvalidToken,
@@ -27,14 +28,14 @@ class AuthorizeApiRequest
 
     @user ||= User.find(token.user_id)
 
-  rescue ActiveRecord::RecordNotFound => e
-    raise(
-      ExceptionHandler::InvalidToken,
-      ("#{Message.invalid_token} #{e.message}")
-    )
+    rescue ActiveRecord::RecordNotFound => e
+      raise(
+        ExceptionHandler::InvalidToken,
+        ("#{Message.invalid_token} #{e.message}")
+      )
   end
 
-  # check for token in `Authorization` header
+  # check for token in `Token` header
   def http_auth_header
     if headers['Token'].present?
       return headers['Token'].split(' ').last

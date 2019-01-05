@@ -3,9 +3,9 @@ require "rails_helper"
 RSpec.describe ApplicationController, type: :controller do
   # create test user
   let!(:user) { create(:user) }
-   # set headers for authorization
-  let(:headers) { { 'Authorization' => token_generator(user.id) } }
-  let(:invalid_headers) { { 'Authorization' => nil } }
+   # set headers for Token
+  let(:headers) { { 'Token' => token_generator(user.id) } }
+  let(:invalid_headers) { { 'Token' => nil } }
 
   describe "#authorize_request" do
     context "when auth token is passed" do
