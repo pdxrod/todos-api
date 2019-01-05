@@ -1,7 +1,10 @@
+require 'securerandom'
+
 module ControllerSpecHelper
   # generate tokens from user id
   def token_generator(user_id)
-    JsonWebToken.encode(user_id: user_id)
+    token = User.find( user_id ).token
+    token ? token : SecureRandom.uuid.gsub( '-', '' )
   end
 
   # generate expired tokens from user id
@@ -13,7 +16,7 @@ module ControllerSpecHelper
   # return valid headers
   def valid_headers
     {
-      "Authorization" => token_generator(user.id),
+      "Token" => token_generator(user.id),
       "Content-Type" => "application/json"
     }
   end
@@ -21,7 +24,7 @@ module ControllerSpecHelper
   # return invalid headers
   def invalid_headers
     {
-      "Authorization" => nil,
+      "Token" => nil,
       "Content-Type" => "application/json"
     }
   end
