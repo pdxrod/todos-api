@@ -16,22 +16,22 @@ class AuthorizeApiRequest
   attr_reader :headers
 
   def user
-    # check if user is in the database
-    # memoize user object
-    @user ||= User.find_by_token(decoded_auth_token)
+    token = Token.find_by_token(http_auth_header)
+    time = Time.now - 1.hour
+    if token.created_at < time
+      raise(
+        ExceptionHandler::InvalidToken,
+        ("#{Message.expired_token} #{e.message}")
+      )
+    end
 
-    # handle user not found
+    @user ||= User.find(token.user_id)
+
   rescue ActiveRecord::RecordNotFound => e
-    # raise custom error
     raise(
       ExceptionHandler::InvalidToken,
       ("#{Message.invalid_token} #{e.message}")
     )
-  end
-
-  # decode authentication token
-  def decoded_auth_token
-    @decoded_auth_token = http_auth_header
   end
 
   # check for token in `Authorization` header

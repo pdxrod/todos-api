@@ -3,9 +3,12 @@ class AuthenticationController < ApplicationController
 
   # return auth token once user is authenticated
   def authenticate
-    auth_token =
-      AuthenticateUser.new(auth_params[:email], auth_params[:password]).user.token
-    json_response(auth_token: auth_token)
+    tokens = AuthenticateUser.new(auth_params[:email], auth_params[:password]).user.tokens
+    token = tokens.last
+    if token.nil? || token.created_at < Time.now - 1.hour
+      raise Message.expired_token
+    end
+    json_response(auth_token: token.token)
   end
 
   private
