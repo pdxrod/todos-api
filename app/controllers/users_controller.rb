@@ -7,6 +7,7 @@ class UsersController < ApplicationController
     user = User.create!(user_params)
     auth_token = AuthenticateUser.new(user.email, user.password).call
     token = Token.new
+    user.token = auth_token
     token.token = auth_token
     token.user_id = user.id
     user.save!

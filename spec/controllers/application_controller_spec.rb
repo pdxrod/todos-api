@@ -3,6 +3,7 @@ require "rails_helper"
 RSpec.describe ApplicationController, type: :controller do
   # create test user
   let!(:user) { create(:user) }
+  let!(:token) { create(:token, user_id: user.id, token: user.token ) }
    # set headers for Token
   let(:headers) { { 'Token' => token_generator(user.id) } }
   let(:invalid_headers) { { 'Token' => nil } }

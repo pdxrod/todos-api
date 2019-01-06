@@ -1,13 +1,11 @@
 require 'securerandom'
 
 module ControllerSpecHelper
-  # generate tokens from user id
+
   def token_generator(user_id)
-    token = User.find( user_id ).tokens.last
-    token ? token.token : SecureRandom.uuid.gsub( '-', '' )
+    token = User.find( user_id ).token
   end
 
-  # generate expired tokens from user id
   def expired_token_generator(user_id)
     token = User.find( user_id ).tokens.last
     time = Time.now.to_i - 2.hours

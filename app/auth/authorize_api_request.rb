@@ -17,12 +17,19 @@ class AuthorizeApiRequest
 
   def user
     token = Token.find_by_token(http_auth_header)
+
+    if token.nil?
+      raise(
+        ExceptionHandler::InvalidToken,
+        (Message.invalid_token)
+      )
+    end
+
     time = Time.now - 1.hour
-    
     if token.created_at < time
       raise(
         ExceptionHandler::InvalidToken,
-        ("#{Message.expired_token} #{e.message}")
+        (Message.expired_token)
       )
     end
 
