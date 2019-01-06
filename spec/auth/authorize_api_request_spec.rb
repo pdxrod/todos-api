@@ -64,7 +64,7 @@ RSpec.describe AuthorizeApiRequest do
           expect { invalid_request_obj.call }
             .to raise_error(
               ExceptionHandler::InvalidToken,
-              /Not enough or too many segments/
+              /Invalid token/
             )
         end
       end

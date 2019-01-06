@@ -9,8 +9,10 @@ module ControllerSpecHelper
 
   def expired_token_generator(user_id)
     token = User.find( user_id ).tokens.last
-    time = Time.now.to_i - 2.hours
-    token.created_at = time
+    token.created_at -= 2.hours
+
+puts "\ntoken #{token.token} #{token.created_at} #{token.id}"
+
     token.save!
     token.token
   end
