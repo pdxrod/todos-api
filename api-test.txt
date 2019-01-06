@@ -8,5 +8,3 @@ http :3000/auth/login email=ash4@email.com password=foobar
 http POST :3000/todos title=Mozart created_by=1 	Token:<THE auth_token RETURNED FROM THE PREVIOUS COMMAND>
 http POST :3000/todos title=Beethoven created_by=1 	Token:<THE auth_token>
 http :3000/todos Accept:'application/vnd.todos.v1+json' Token:<THE auth_token>
-
-

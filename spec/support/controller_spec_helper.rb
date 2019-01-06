@@ -3,7 +3,8 @@ require 'securerandom'
 module ControllerSpecHelper
 
   def token_generator(user_id)
-    token = User.find( user_id ).token
+    return SecureRandom.uuid.gsub( '-', '' ) unless user_id
+    User.find( user_id ).token
   end
 
   def expired_token_generator(user_id)
@@ -18,6 +19,7 @@ module ControllerSpecHelper
   def valid_headers(user_id)
     {
       "Token" => token_generator(user_id),
+      "auth_token" => token_generator(user_id),
       "Content-Type" => "application/json"
     }
   end
@@ -26,6 +28,7 @@ module ControllerSpecHelper
   def invalid_headers
     {
       "Token" => nil,
+      "auth_token" => nil,
       "Content-Type" => "application/json"
     }
   end

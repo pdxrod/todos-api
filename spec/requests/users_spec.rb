@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe 'Users API', type: :request do
-  let(:user) { create(:user) }
-  let!(:token) { create(:token, user_id: user.id, token: user.token ) }
-  let(:headers) { valid_headers(user.id).except('Token') }
+  let(:user) { build(:user) }
+#  let!(:token) { create(:token, user_id: user.id, token: user.token ) }
+  let(:headers) { valid_headers(user.id).except('Token').except('auth_token').except('token') }
   let(:valid_attributes) do
     attributes_for(:user, password_confirmation: user.password, token: user.token)
   end
@@ -12,6 +12,7 @@ RSpec.describe 'Users API', type: :request do
   describe 'POST /signup' do
     context 'when valid request' do
       before { post '/signup', params: valid_attributes.to_json, headers: headers }
+
       it 'creates a new user' do
         expect(response).to have_http_status(201)
       end

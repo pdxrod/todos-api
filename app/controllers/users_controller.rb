@@ -1,10 +1,13 @@
+require 'securerandom'
+
 class UsersController < ApplicationController
   skip_before_action :authorize_request, only: :create
 
   # POST /signup
   # return authenticated token upon signup
   def create
-    user = User.create!(user_params)
+    args = user_params
+    user = User.create!(args)
     auth_token = AuthenticateUser.new(user.email, user.password).call
     token = Token.new
     user.token = auth_token
