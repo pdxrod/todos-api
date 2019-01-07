@@ -4,7 +4,7 @@ RSpec.describe 'Authentication', type: :request do
   # Authentication test suite
   describe 'POST /auth/login' do
     # create test user
-    let!(:token) { create(:token, token: SecureRandom.uuid.gsub( '-', '' ) ) }
+    let(:token) { create(:token, token: SecureRandom.uuid.gsub( '-', '' ) ) }
     let!(:user) { create(:user, token_id: token.id) }
     # set headers for Token
     let(:headers) { valid_headers(user.id).except('auth_token') }

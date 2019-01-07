@@ -3,7 +3,8 @@ class AuthenticationController < ApplicationController
 
   # return auth token once user is authenticated
   def authenticate
-    token = AuthenticateUser.new(auth_params[:email], auth_params[:password]).user.token
+    token_id = AuthenticateUser.new(auth_params[:email], auth_params[:password]).user.token_id
+    token = Token.find token_id
     if token.created_at < Time.now - 1.hour
       raise(
         ExceptionHandler::InvalidToken,
