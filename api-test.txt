@@ -5,6 +5,6 @@
 
 http :3000/signup name=ash4 email=ash4@email.com password=foobar password_confirmation=foobar
 http :3000/auth/login email=ash4@email.com password=foobar
-http POST :3000/todos title=Mozart created_by=1 	Token:<THE auth_token RETURNED FROM THE PREVIOUS COMMAND>
-http POST :3000/todos title=Beethoven created_by=1 	Token:<THE auth_token>
-http :3000/todos Accept:'application/vnd.todos.v1+json' Token:<THE auth_token>
+http POST :3000/todos title=Mozart created_by=1 	auth_token:<THE auth_token RETURNED FROM THE PREVIOUS COMMAND>
+http POST :3000/todos title=Beethoven created_by=1 	auth_token:<THE auth_token>
+http :3000/todos Accept:'application/vnd.todos.v1+json' auth_token:<THE auth_token>

@@ -3,8 +3,8 @@ require 'rails_helper'
 RSpec.describe 'Todos API', type: :request do
   # initialize test data
   # add todos owner
-  let(:user) { create(:user) }
-  let!(:token) { create(:token, user_id: user.id, token: user.token ) }
+  let(:token) { create(:token, token: SecureRandom.uuid.gsub( '-', '' ) ) }
+  let!(:user) { create(:user, token_id: token.id) }
   let!(:todos) { create_list(:todo, 10, created_by: user.id) }
   let(:todo_id) { todos.first.id }
   # authorize request

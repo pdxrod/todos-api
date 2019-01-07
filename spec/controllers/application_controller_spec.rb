@@ -2,11 +2,11 @@ require "rails_helper"
 
 RSpec.describe ApplicationController, type: :controller do
   # create test user
-  let!(:user) { create(:user) }
-  let!(:token) { create(:token, user_id: user.id, token: user.token ) }
+  let(:token) { create(:token, token: SecureRandom.uuid.gsub( '-', '' ) ) }
+  let!(:user) { create(:user, token_id: token.id) }
    # set headers for Token
-  let(:headers) { { 'Token' => token_generator(user.id) } }
-  let(:invalid_headers) { { 'Token' => nil } }
+  let(:headers) { { 'auth_token' => token_generator(user.id) } }
+  let(:invalid_headers) { { 'auth_token' => nil } }
 
   describe "#authorize_request" do
     context "when auth token is passed" do

@@ -4,15 +4,12 @@ module ControllerSpecHelper
 
   def token_generator(user_id)
     return SecureRandom.uuid.gsub( '-', '' ) unless user_id
-    User.find( user_id ).token
+    User.find(user_id).find(token_id)
   end
 
   def expired_token_generator(user_id)
-    token = User.find( user_id ).tokens.last
+    token = Token.find( User.find(user_id).find(token_id) )
     token.created_at -= 2.hours
-
-puts "\ntoken #{token.token} #{token.created_at} #{token.id}"
-
     token.save!
     token.token
   end
@@ -20,7 +17,7 @@ puts "\ntoken #{token.token} #{token.created_at} #{token.id}"
   # return valid headers
   def valid_headers(user_id)
     {
-      "Token" => token_generator(user_id),
+      "auth_token" => token_generator(user_id),
       "auth_token" => token_generator(user_id),
       "Content-Type" => "application/json"
     }
@@ -29,7 +26,7 @@ puts "\ntoken #{token.token} #{token.created_at} #{token.id}"
   # return invalid headers
   def invalid_headers
     {
-      "Token" => nil,
+      "auth_token" => nil,
       "auth_token" => nil,
       "Content-Type" => "application/json"
     }

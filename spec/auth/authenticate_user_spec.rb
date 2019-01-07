@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe AuthenticateUser do
   # create test user
-  let(:user) { create(:user) }
-  let!(:token) { create(:token, user_id: user.id, token: user.token ) }
+  let(:token) { create(:token, token: SecureRandom.uuid.gsub( '-', '' ) ) }
+  let!(:user) { create(:user, token_id: token.id) }
   # valid request subject
   subject(:valid_auth_obj) { described_class.new(user.email, user.password) }
   # invalid request subject
