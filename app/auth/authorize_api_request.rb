@@ -36,6 +36,7 @@ class AuthorizeApiRequest
     User.all.each do |user|
       @user = user if token.id == user.token_id
     end
+    @user
 
     rescue ActiveRecord::RecordNotFound => e
       raise(
