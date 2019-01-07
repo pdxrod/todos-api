@@ -33,7 +33,9 @@ class AuthorizeApiRequest
       )
     end
 
-    @user ||= User.find(token.user_id)
+    User.all.each do |user|
+      @user = user if token.id == user.token_id
+    end
 
     rescue ActiveRecord::RecordNotFound => e
       raise(
@@ -45,7 +47,7 @@ class AuthorizeApiRequest
   # check for token in `auth_token` header
   def http_auth_header
     if headers['auth_token'].present?
-      return headers['auth_token'].token.split(' ').last
+      return headers['auth_token']
     end
     raise(ExceptionHandler::MissingToken, Message.missing_token)
   end
