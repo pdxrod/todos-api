@@ -34,7 +34,7 @@ RSpec.describe AuthorizeApiRequest do
       context 'when invalid token' do
         subject(:invalid_request_obj) do
           # custom helper method `token_generator`
-          described_class.new('Token' => token_generator(5))
+          described_class.new('Token' => token_generator(nil))
         end
 
         it 'raises an InvalidToken error' do
@@ -51,7 +51,7 @@ RSpec.describe AuthorizeApiRequest do
           expect { request_obj.call }
             .to raise_error(
               ExceptionHandler::InvalidToken,
-              /Signature has expired/
+              /Sorry, your token has expired. Please login to continue./
             )
         end
       end
