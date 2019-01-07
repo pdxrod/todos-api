@@ -5,7 +5,7 @@ RSpec.describe AuthorizeApiRequest do
   let(:token) { create(:token, token: SecureRandom.uuid.gsub( '-', '' ) ) }
   let!(:user) { create(:user, token_id: token.id) }
   # Mock `Token` header
-  let(:header) { { 'Token' => token_generator(user.id) } }
+  let(:header) { { 'token' => token_generator(user.id) } }
   # Invalid request subject
   subject(:invalid_request_obj) { described_class.new({}) }
   # Valid request subject
