@@ -7,7 +7,7 @@ RSpec.describe 'Authentication', type: :request do
     let(:token) { create(:token, token: SecureRandom.uuid.gsub( '-', '' ) ) }
     let!(:user) { create(:user, token_id: token.id) }
     # set headers for Token
-    let(:headers) { valid_headers(user.id).except('auth_token') }
+    let(:headers) { valid_headers(user.id).except('token') }
     # set test valid and invalid credentials
     let(:valid_credentials) do
       {
@@ -30,7 +30,7 @@ RSpec.describe 'Authentication', type: :request do
       before { post '/auth/login', params: valid_credentials, headers: headers }
 
       it 'returns an authentication token' do
-        expect(json['auth_token']).not_to be_nil
+        expect(json['token']).not_to be_nil
       end
     end
 

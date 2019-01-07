@@ -5,8 +5,8 @@ RSpec.describe ApplicationController, type: :controller do
   let(:token) { create(:token, token: SecureRandom.uuid.gsub( '-', '' ) ) }
   let!(:user) { create(:user, token_id: token.id) }
    # set headers for Token
-  let(:headers) { { 'auth_token' => token_generator(user.id) } }
-  let(:invalid_headers) { { 'auth_token' => nil } }
+  let(:headers) { { 'token' => token_generator(user.id) } }
+  let(:invalid_headers) { { 'token' => nil } }
 
   describe "#authorize_request" do
     context "when auth token is passed" do

@@ -11,7 +11,7 @@ class AuthenticationController < ApplicationController
         ("#{Message.expired_token} #{e.message}")
       )
     end
-    json_response(auth_token: token.token)
+    json_response(token: token.token)
   end
 
   private
