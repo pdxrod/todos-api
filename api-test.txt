@@ -1,4 +1,4 @@
-# brew install httpie (or apt-get, or install from source - https://github.com/jakubroztocil/httpie)
+# brew install httpie (or apt-get install, or install from source - https://github.com/jakubroztocil/httpie)
 # start with a new, empty database
 # rake db:migrate
 # rails s &
@@ -8,3 +8,5 @@ http :3000/auth/login email=ash4@email.com password=foobar
 http POST :3000/todos title=Mozart created_by=1 	token:<THE token RETURNED FROM THE PREVIOUS COMMAND>
 http POST :3000/todos title=Beethoven created_by=1 	token:<THE token>
 http :3000/todos Accept:'application/vnd.todos.v1+json' token:<THE token>
+http POST :3000/todos/1/items name=Listen created_by=1  token:<THE token>
+
